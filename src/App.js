@@ -110,7 +110,7 @@ function App() {
           <h2>
             You Selected <span style={{ fontSize: 30 }}>{selectedCity}</span>,{" "}
             <span style={{ color: "#808080" }}>
-              {selectedState},{selectedCountry}
+              {selectedState}, {selectedCountry}
             </span>
           </h2>
         </div>
