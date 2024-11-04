@@ -10,7 +10,7 @@ function App() {
 
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedState, setSelectedState] = useState("");
-  const [selectedCity,setSelectedCity]=useState("")
+  const [selectedCity, setSelectedCity] = useState("");
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -28,32 +28,35 @@ function App() {
 
   useEffect(() => {
     const fetchStates = async () => {
-      
-        try {
-          const res = await axios.get(`https://crio-location-selector.onrender.com/country=${selectedCountry}/states`);
-          setState(res.data)
-        } catch (err) {
-          console.log("could not fetch states",err)
-        }
+      try {
+        const res = await axios.get(
+          `https://crio-location-selector.onrender.com/country=${selectedCountry}/states`
+        );
+        setState(res.data);
+      } catch (err) {
+        console.log("could not fetch states", err);
+      }
     };
     if (selectedCountry) {
-      fetchStates()
+      fetchStates();
     }
   }, [selectedCountry]);
 
-  useEffect(()=>{
-    const fetchCities=async ()=>{
-      try{
-        const res=await axios.get(`https://crio-location-selector.onrender.com/country=${selectedCountry}/state=${selectedState}/cities`)
-        setCity(res.data)
-      }catch(err){
-        console.log("could not fetch cities",err)
+  useEffect(() => {
+    const fetchCities = async () => {
+      try {
+        const res = await axios.get(
+          `https://crio-location-selector.onrender.com/country=${selectedCountry}/state=${selectedState}/cities`
+        );
+        setCity(res.data);
+      } catch (err) {
+        console.log("could not fetch cities", err);
       }
+    };
+    if (selectedCountry && selectedState) {
+      fetchCities();
     }
-    if(selectedCountry && selectedState){
-      fetchCities()
-    }
-  },[selectedCountry,selectedState])
+  }, [selectedCountry, selectedState]);
 
   return (
     <div className="App">
@@ -91,8 +94,7 @@ function App() {
         className="dropdownbox"
         value={selectedCity}
         disabled={!selectedState}
-        onChange={(e)=> setSelectedCity(e.target.value)}
-        
+        onChange={(e) => setSelectedCity(e.target.value)}
       >
         <option style={{ color: "#EBEBE4 " }} value="" disabled>
           Select City
@@ -105,7 +107,12 @@ function App() {
       </select>
       {selectedCity && (
         <div>
-          <h2>You Selected <span style={{fontSize:30}} >{selectedCountry}</span>, <span style={{color:"#808080"}}>{selectedState},{selectedCity}</span></h2>
+          <h2>
+            You Selected <span style={{ fontSize: 30 }}>{selectedCity}</span>,{" "}
+            <span style={{ color: "#808080" }}>
+              {selectedState},{selectedCountry}
+            </span>
+          </h2>
         </div>
       )}
     </div>
